@@ -22,16 +22,16 @@ namespace VerifyUserEmailAddresses
         static async Task Main(string[] args)
         {
             // Get input variables
-            Console.Write("Enter API base for reading user data (e.g. https://xyz.zendesk.com): ");
+            Console.Write("Enter Zendesk Support API base (e.g. https://xyz.zendesk.com): ");
             var userApiBase = Console.ReadLine();
-            Console.Write("Enter email address for API access: ");
+            Console.Write("Enter email address of a Zendesk admin or agent: ");
             var emailAddress = Console.ReadLine();
-            Console.Write("Enter API token: ");
+            Console.Write("Enter Zendesk API token: ");
             var apiToken = Console.ReadLine();
             var apiCredentials = Convert.ToBase64String(Encoding.Default.GetBytes($"{emailAddress}/token:{apiToken}"));
-            Console.Write("Enter Excel file name: ");
+            Console.Write("Enter Excel file name, including path (e.g. C:\\myExcelFile.xlsx): ");
             var fileName = Console.ReadLine();
-            Console.Write("Enter column containing the email addresses to verify: ");
+            Console.Write("Enter the column in the Excel file that contains the email addresses to verify: ");
             var emailAddrColIndex = Console.ReadLine();
 
             // Start processing of file
@@ -73,7 +73,7 @@ namespace VerifyUserEmailAddresses
                         Console.WriteLine("");
                         Console.WriteLine($"Total # email addresses verified: {_numEmailsVerified}");
                         Console.WriteLine($"Total # email addresses already verified: {_numEmailsAlreadyVerified}");
-                        Console.WriteLine($"Total # email addresses couldn't be verified: {_numEmailsNotVerified}");
+                        Console.WriteLine($"Total # email addresses that couldn't be verified: {_numEmailsNotVerified}");
                         Console.WriteLine($"Total # email addresses processed: {_numEmailsProcessed}");
                         Console.WriteLine($"Program duration time: {ts.Hours} hours, {ts.Minutes} minutes, {ts.Seconds} seconds, {ts.Milliseconds} milliseconds");
                     }
@@ -81,7 +81,7 @@ namespace VerifyUserEmailAddresses
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error opening file: {fileName}, Exception Message: {ex.Message}\nInnerException: {ex.InnerException}\nStack trace: {ex.StackTrace}");
+                Console.WriteLine($"Error opening file: {fileName}\nException Message: {ex.Message}\nInnerException: {ex.InnerException}\nStack trace: {ex.StackTrace}");
             }
         }
 
@@ -168,7 +168,7 @@ namespace VerifyUserEmailAddresses
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ZdGetUserId Exception Message: {ex.Message}\nInnerException: {ex.InnerException}\nStack trace: {ex.StackTrace}");
+                Console.WriteLine($"Error searching for user email: {userEmailAddress}\n Exception Message: {ex.Message}\nInnerException: {ex.InnerException}\nStack trace: {ex.StackTrace}");
             }
             return userId;
         }
@@ -204,7 +204,7 @@ namespace VerifyUserEmailAddresses
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ZdGetUserIdentity Exception Message: {ex.Message}\nInnerException: {ex.InnerException}\nStack trace: {ex.StackTrace}");
+                Console.WriteLine($"Error getting user identity for user ID: {userId}, email address: {userEmailAddress}\nException Message: {ex.Message}\nInnerException: {ex.InnerException}\nStack trace: {ex.StackTrace}");
             }
             return userIdentity;
         }
@@ -245,7 +245,7 @@ namespace VerifyUserEmailAddresses
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"ZdVerifyIdentity Exception Message: {ex.Message}\nInnerException: {ex.InnerException}\nStack trace: {ex.StackTrace}");
+                Console.WriteLine($"Error updating user identity for user identity ID: {userIdentity.id}\nException Message: {ex.Message}\nInnerException: {ex.InnerException}\nStack trace: {ex.StackTrace}");
             }
             return verifySuccess;
         }
