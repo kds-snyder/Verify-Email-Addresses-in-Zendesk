@@ -15,13 +15,10 @@ When you use the program, you will need to input the following:
 5. Column in the Excel file containing the email addresses to verify (e.g. A)
 
 To run the program, open it in Visual Studio and then enter CTRL + F5. The program will open a console window and start asking for the input specified above, and then process the file. For each email address processed, the program outputs a line to the console window containing the row number, email address, user ID, user identity ID, verified setting, and whether the email needed to be verified. When the program is finished, it outputs the following:
+--Total # email addresses verified
+--Total # email addresses already verified
+--Total # email addresses that couldn't be verified
+--Total # email addresses processed
+--Program duration time
 
-Total # email addresses verified
-
-Total # email addresses already verified
-
-Total # email addresses that couldn't be verified
-
-Total # email addresses processed
-
-Program duration time
+To save the output, enter CTRL-A in the console window to mark all the output as selected, then open an application such as Notepad or Notepad++, and enter CTRL-V to paste the output.
